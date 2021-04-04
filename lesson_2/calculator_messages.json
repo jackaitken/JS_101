@@ -1,12 +1,45 @@
 {
-  "welcome" : "Welcome to Calculator",
-  "first" : "What is the first number?",
-  "second" : "What is the second number?",
-  "numberValidate" : "Please enter a valid number.",
-  "operation" : "'What operation would you like to perform?\n1: Add\n2: Subtract\n3: Multiply\n4: Divide",
-  "operatorValidate" : "Please enter 1, 2, 3, or 4",
-  "result" : "The result is:",
-  "runAgain" : "Do you want to run another calculation? Type 'y' or 'n'.",
-  "runAgainValidate" : "Please type 'y' or 'n'.",
-  "goodbye" : "Okay! See ya later."
+  "language validator" : {
+    "validate" : "Please enter 1, 2, or 3"
+  },
+
+  "1" : {
+    "welcome" : "Welcome to Calculator",
+    "first" : "What is the first number?",
+    "second" : "What is the second number?",
+    "numberValidate" : "Please enter a valid number.",
+    "operation" : "What operation would you like to perform?\n1: Add\n2: Subtract\n3: Multiply\n4: Divide",
+    "operatorValidate" : "Please enter 1, 2, 3, or 4",
+    "result" : "The result is:",
+    "runAgain" : "Do you want to run another calculation? Type 'y' or 'n'.",
+    "runAgainValidate" : "Please type 'y' or 'n'.",
+    "goodbye" : "Okay! See ya later."
+  },
+
+  "2" : {
+    "welcome" : "Bienvenido a Calculadora",
+    "first" : "Cual es el primer numero?",
+    "second" : "Cual es el segundo numero?",
+    "numberValidate" : "Por favor ingrese un número valido.",
+    "operation" : "¿Qué operación te gustaría realizar?\n1: Sumar\n2: Restar\n3: Multiplicar\n4: Dividir",
+    "operatorValidate" : "Ingrese 1, 2, 3 o 4",
+    "result" : "El resultado es:",
+    "runAgain" : "¿Quieres ejecutar otro cálculo? Escriba 'y' o 'n'.",
+    "runAgainValidate" : "Ingrese 'y' o 'n'.",
+    "goodbye" : "¡Okey! Hasta luego."
+  },
+
+  "3" : {
+    "welcome" : "Bienvenue dans Calculator",
+    "first" : "Quel est le premier chiffre?",
+    "second" : "Quel est le deuxième nombre?",
+    "numberValidate" : "S'il vous plait, entrez un nombre valide.",
+    "operation" : "Quelle opération souhaitez-vous effectuer?\n1: Ajouter\n2: Soustraire\n3: Multiplier\n4: Diviser",
+    "operatorValidate" : "Veuillez saisir 1, 2, 3 ou 4",
+    "result" : "Le résultat est:",
+    "runAgain" : "Voulez-vous exécuter un autre calcul? Tapez 'y' ou 'n'.",
+    "runAgainValidate" : "Veuillez taper 'y' ou 'n'.",
+    "goodbye" : "D'accord! A plus."
+  }
+
 }

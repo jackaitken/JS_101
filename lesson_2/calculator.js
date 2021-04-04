@@ -11,30 +11,38 @@ let invalidLetter = char => {
   return char === 'y' || char === 'n';
 };
 
-prompt(MESSAGES.welcome);
+prompt('Please choose a language:\n1: English\n2: Spanish\n3: French');
+let language = readline.question();
+
+while (invalidNumber(language) || (language < 1 || language > 3)) {
+  prompt(MESSAGES["language validator"].validate);
+  language = readline.question();
+}
+
+prompt(MESSAGES[language].welcome);
 
 while (true) {
-  prompt(MESSAGES.first);
+  prompt(MESSAGES[language].first);
   let number1 = readline.question();
 
   while (invalidNumber(number1)) {
-    prompt(MESSAGES.numberValidate);
+    prompt(MESSAGES[language].numberValidate);
     number1 = readline.question();
   }
 
-  prompt(MESSAGES.second);
+  prompt(MESSAGES[language].second);
   let number2 = readline.question();
 
   while (invalidNumber(number2)) {
-    prompt(MESSAGES.numberValidate);
+    prompt(MESSAGES[language].numberValidate);
     number2 = readline.question();
   }
 
-  prompt(MESSAGES.operation);
+  prompt(MESSAGES[language].operation);
   let operation = readline.question();
 
   while (invalidNumber(operation) || (operation < 1 || operation > 4)) {
-    prompt(MESSAGES.operatorValidate);
+    prompt(MESSAGES[language].operatorValidate);
     operation = readline.question();
   }
 
@@ -50,19 +58,19 @@ while (true) {
       break;
   }
 
-  prompt(`${MESSAGES.result} ${output}`);
+  prompt(`${MESSAGES[language].result} ${output}`);
 
   // Run another calculation or exit?
-  prompt(MESSAGES.runAgain);
+  prompt(MESSAGES[language].runAgain);
   let continueQuestion = readline.question();
 
   while (!invalidLetter(continueQuestion)) {
-    prompt(MESSAGES.runAgainValidate);
+    prompt(MESSAGES[language].runAgainValidate);
     continueQuestion = readline.question();
   }
 
   if (continueQuestion.toLowerCase() !== 'y') {
-    prompt(MESSAGES.goodbye);
+    prompt(MESSAGES[language].goodbye);
     break;
   }
 }
