@@ -1,0 +1,12 @@
+{
+  "welcome" : "Welcome to Calculator",
+  "first" : "What is the first number?",
+  "second" : "What is the second number?",
+  "numberValidate" : "Please enter a valid number.",
+  "operation" : "'What operation would you like to perform?\n1: Add\n2: Subtract\n3: Multiply\n4: Divide",
+  "operatorValidate" : "Please enter 1, 2, 3, or 4",
+  "result" : "The result is:",
+  "runAgain" : "Do you want to run another calculation? Type 'y' or 'n'.",
+  "runAgainValidate" : "Please type 'y' or 'n'.",
+  "goodbye" : "Okay! See ya later."
+}
