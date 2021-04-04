@@ -13,9 +13,7 @@ let invalidLetter = char => {
 
 prompt(MESSAGES.welcome);
 
-let calculateAgain = true;
-
-do {
+while (true) {
   prompt(MESSAGES.first);
   let number1 = readline.question();
 
@@ -63,11 +61,8 @@ do {
     continueQuestion = readline.question();
   }
 
-  if (continueQuestion.toLowerCase() === 'y') {
-    calculateAgain = true;
-  } else {
+  if (continueQuestion.toLowerCase() !== 'y') {
     prompt(MESSAGES.goodbye);
-    calculateAgain = false;
+    break;
   }
-
-} while (calculateAgain);
+}
