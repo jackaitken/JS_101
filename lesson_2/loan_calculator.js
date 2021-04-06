@@ -9,7 +9,9 @@ let numberIsInvalid = amount => {
 
 let nameIsValid = name => name.length !== 0;
 
-let continueValidation = key => key === 'y' || key === 'n';
+let continueValidation = key => {
+  return key.toLowerCase() === 'y' || key.toLowerCase() === 'n';
+};
 
 prompt(MESSAGES.welcome);
 
