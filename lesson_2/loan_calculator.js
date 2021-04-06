@@ -44,7 +44,7 @@ while (true) {
 
   while (numberIsInvalid(loanDuration)) {
     prompt(`${MESSAGES.loanDuration}`);
-    loanDuration = Number(readline.question('$ '));
+    loanDuration = Number(readline.question());
   }
 
   // Convert loanDuration from years to months
@@ -57,7 +57,7 @@ while (true) {
 
   while (numberIsInvalid(apr)) {
     prompt(`${MESSAGES.APRValidate}`);
-    apr = Number(readline.question('$ '));
+    apr = Number(readline.question('% '));
   }
 
   let monthlyRate = apr / 12;
