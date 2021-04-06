@@ -1,9 +1,13 @@
 {
   "welcome" : "Welcome to Loan Calculator",
   "loanName" : "What are are you trying to pay off? (Car? House? Student Loans?)",
+  "nameValidate" : "Sorry, what would you like to name your loan?",
   "loanAmount" : "Okay, what is the total loan amount for your",
-  "amountValidate" : "Please enter the amount in dollars and cents, with or without commas (e.g. 2,500.45)",
+  "amountValidate" : "Please enter the amount in dollars and cents, without a '$' or commas (e.g. 2500.45)",
   "loanDuration" : "Please enter the loan duration in months",
   "APR" : "Finally, what is the Annual Percentage Rate (APR) for your",
-  "APRValidate" : "Please enter your APR in percent format e.g 15 (is 15%)"
+  "APRValidate" : "Please enter your APR in percent format e.g 15 (is 15%)",
+  "another" : "Do you have another loan that you want to calculate?",
+  "yOrN" : "Press 'y' or 'n'",
+  "goodbye" : "Okay, see ya!"
 }
