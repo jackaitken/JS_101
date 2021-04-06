@@ -13,18 +13,17 @@ while (true) {
   // Get loan amount
   prompt(`${MESSAGES.loanAmount} '${loanName}'?`);
   prompt(`${MESSAGES.amountValidate}`);
-  let loanAmount = readline.question('$ ');
+  let loanAmount = Number(readline.question('$ '));
 
   // Get loan duration
   prompt(MESSAGES.loanDuration);
-  let loanDuration = readline.question();
+  let loanDuration = Number(readline.question());
 
-  // Get APR
-  prompt(`${MESSAGES.APR} ${loanName}?`);
+  // Get APR and convert to workable number
+  prompt(`${MESSAGES.APR} '${loanName}' loan?`);
   prompt(MESSAGES.APRValidate);
-  let apr = readline.question('% ');
-
-  // Convert APR to workable number
+  let apr = Number(readline.question('% '));
+  apr /= 12;
   apr /= 100;
 
   let monthlyPayment = (
@@ -33,5 +32,15 @@ while (true) {
 
   monthlyPayment = monthlyPayment.toFixed(2);
 
-  console.log(monthlyPayment);
+  let totalPayment = monthlyPayment * loanDuration;
+  totalPayment = totalPayment.toFixed(2);
+
+  let interestAmount = totalPayment - loanAmount;
+  interestAmount = interestAmount.toFixed(2);
+
+  prompt(`Your monthly payment will be: $${monthlyPayment}`);
+  prompt(`You will pay a total of: $${interestAmount} in interest`);
+  prompt(`Your total payment will be: $${totalPayment}`);
+
+  break;
 }
