@@ -3,6 +3,8 @@ let MESSAGES = require('./loan_messages.json');
 
 let prompt = txt => console.log(`=> ${txt}`);
 
+// Validation functions
+
 let numberIsInvalid = amount => {
   return Number.isNaN(Number(amount)) || amount < 1;
 };
@@ -13,9 +15,10 @@ let continueValidation = key => {
   return key.toLowerCase() === 'y' || key.toLowerCase() === 'n';
 };
 
-prompt(MESSAGES.welcome);
-
 while (true) {
+  console.clear();
+  prompt(MESSAGES.welcome);
+
   // Get name of loan
   prompt(MESSAGES.loanName);
   let loanName = readline.question();
@@ -44,6 +47,7 @@ while (true) {
     loanDuration = Number(readline.question('$ '));
   }
 
+  // Convert loanDuration from years to months
   loanDuration *= 12;
 
   // Get APR and convert to workable number

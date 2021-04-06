@@ -6,7 +6,7 @@
   "amountValidate" : "Please enter the amount in dollars and cents, without a '$' or commas (e.g. 2500.45)",
   "loanDuration" : "Please enter the loan duration in years",
   "APR" : "Finally, what is the Annual Percentage Rate (APR) for your",
-  "APRValidate" : "Please enter your APR in percent format e.g 15 (is 15%)",
+  "APRValidate" : "Please enter your APR in percent format e.g 15 is 15%",
   "another" : "Do you have another loan that you want to calculate?",
   "yOrN" : "Press 'y' or 'n'",
   "goodbye" : "Okay, see ya!"
