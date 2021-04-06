@@ -35,12 +35,14 @@ while (true) {
 
   // Get loan duration
   prompt(MESSAGES.loanDuration);
-  let loanMonths = Number(readline.question());
+  let loanDuration = Number(readline.question());
 
-  while (numberIsInvalid(loanMonths)) {
+  while (numberIsInvalid(loanDuration)) {
     prompt(`${MESSAGES.loanDuration}`);
-    loanMonths = Number(readline.question('$ '));
+    loanDuration = Number(readline.question('$ '));
   }
+
+  loanDuration *= 12;
 
   // Get APR and convert to workable number
   prompt(`${MESSAGES.APR} '${loanName}' loan?`);
@@ -52,16 +54,17 @@ while (true) {
     apr = Number(readline.question('$ '));
   }
 
-  apr /= 12;
-  apr /= 100;
+  let monthlyRate = apr / 12;
+  monthlyRate /= 100;
 
-  let monthlyPayment = (
-    loanAmount * (apr / (1 - Math.pow((1 + apr), (-loanMonths))))
+  let monthlyPayment = (loanAmount *
+                (monthlyRate /
+                (1 - Math.pow((1 + monthlyRate), (-loanDuration))))
   );
 
   monthlyPayment = monthlyPayment.toFixed(2);
 
-  let totalPayment = monthlyPayment * loanMonths;
+  let totalPayment = monthlyPayment * loanDuration;
   totalPayment = totalPayment.toFixed(2);
 
   let interestAmount = totalPayment - loanAmount;
