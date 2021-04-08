@@ -4,7 +4,7 @@ const VALID_CHOICES = ['rock', 'paper', 'scissors'];
 
 let prompt = message => console.log(`=> ${message}`);
 
-let decideWinner = (cpuChoice, userChoice) => {
+let displayWinner = (cpuChoice, userChoice) => {
   if ((userChoice === 'rock' && cpuChoice === 'scissors') ||
   (userChoice === 'paper' && cpuChoice === 'rock') ||
   (userChoice === 'scissors' && cpuChoice === 'paper')) {
@@ -33,7 +33,7 @@ while (true) {
 
   prompt(`${MSG.cpuChose} ${cpuChoice}`);
 
-  decideWinner(cpuChoice, userChoice);
+  displayWinner(cpuChoice, userChoice);
 
   prompt("Want to play again? 'y' or 'n'");
   let keepPlaying = readline.question().toLowerCase();
