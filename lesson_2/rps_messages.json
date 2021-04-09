@@ -1,4 +1,4 @@
 {
-  "initialPrompt" : "Choose one: rock, paper, or scissors",
+  "initialPrompt" : "Choose one: rock, paper, scissors, spock, lizard",
   "cpuChose" : "The computer chose:"
 }

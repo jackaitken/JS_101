@@ -1,10 +1,6 @@
-let number = 1;
-let newNumber = number;
-console.log(newNumber === number);
+let names = ['daph', 'jack', 'arlo'];
 
-let arr = [1, 2, 3];
-let newArr = arr;
-
-newArr.push(5);
-console.log(newArr, arr);
-console.log(newArr === arr);
+names.forEach((_, index) => {
+  console.log(index);
+  console.log(`${index + 1}: got a name!`);
+});
