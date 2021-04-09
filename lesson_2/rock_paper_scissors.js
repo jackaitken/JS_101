@@ -12,7 +12,7 @@ const WIN_SCENARIOS_OBJ = {
   l: ['sp', 'p']
 };
 
-let declareGrandWinner = () => userWinCount === 5 || cpuWinCount === 5;
+let gameOver = () => userWinCount === 5 || cpuWinCount === 5;
 
 let prompt = message => console.log(`=> ${message}`);
 
@@ -21,12 +21,12 @@ let validMove = move => VALID_CHOICES.includes(move);
 let getUserChoice = () => {
   let move = readline.question();
 
-  while (!validMove(move)) {
+  while (!validMove(move.toLowerCase())) {
     prompt('Please choose a valid move');
     prompt(MSG.initialPrompt);
     move = readline.question();
   }
-  return move;
+  return move.toLowerCase();
 };
 
 let returnGameWinner = (userChoice, cpuChoice) => {
@@ -48,6 +48,47 @@ let updateScore = winner => {
   }
 };
 
+let displayGrandWinner = () => {
+  console.clear();
+  if (userWinCount > cpuWinCount) {
+    prompt("You're the grand winner!");
+  } else {
+    prompt('The computer is the grand winner.');
+  }
+  prompt(`Final Score: ${userWinCount} - ${cpuWinCount}`);
+};
+
+let displayRoundWinner = gameWinner => {
+  if (gameWinner === 1) {
+    prompt('You won that round!');
+  } else if (gameWinner === -1) {
+    prompt('The computer won that round.');
+  } else {
+    prompt('That round was a tie.');
+  }
+};
+
+let validContinueKey = key => key === 'n' || key === 'y';
+
+let playAgain = () => {
+  prompt("Want to play again? 'y' or 'n'");
+  let continuePlayingKey = readline.question().toLowerCase();
+
+  while (!validContinueKey(continuePlayingKey)) {
+    prompt("Sorry, please enter 'y' or 'n'");
+    continuePlayingKey = readline.question().toLowerCase();
+  }
+  if (continuePlayingKey === 'n') {
+    return false;
+  }
+  return true;
+};
+
+let resetScore = () => {
+  userWinCount = 0;
+  cpuWinCount = 0;
+};
+
 while (true) {
   console.clear();
 
@@ -65,27 +106,19 @@ while (true) {
   let gameWinner = returnGameWinner(userChoice, cpuChoice);
   updateScore(gameWinner);
 
-  if (declareGrandWinner()) {
-    console.clear();
-    if (userWinCount > cpuWinCount) {
-      prompt("You're the grand winner!");
+  if (gameOver()) {
+    displayGrandWinner();
+    let continuePlaying = playAgain();
+    if (!continuePlaying) {
+      prompt('Okay! Thanks for playing.');
+      break;
     } else {
-      prompt('The computer is the grand winner.');
+      resetScore();
     }
-    prompt(`Final Score: ${userWinCount} - ${cpuWinCount}`);
-    break;
-  }
-
-  prompt(`The computer chose: ${MSG[cpuChoice]}`);
-
-  if (gameWinner === 1) {
-    prompt('You won that round!');
-  } else if (gameWinner === -1) {
-    prompt('The computer won that round.');
   } else {
-    prompt('That round was a tie.');
+    prompt(`The computer chose: ${MSG[cpuChoice]}`);
+    displayRoundWinner(gameWinner);
+    prompt('Press enter to continue');
+    readline.question();
   }
-
-  prompt('Press enter to continue');
-  readline.question();
 }
