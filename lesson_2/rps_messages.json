@@ -1,4 +1,9 @@
 {
-  "initialPrompt" : "Choose one: rock, paper, scissors, spock, lizard",
-  "cpuChose" : "The computer chose:"
+  "initialPrompt" : "'r': rock, 'p': paper, 's': scissors, 'sp': spock, 'l': lizard",
+  "cpuChose" : "The computer chose:",
+  "r" : "Rock",
+  "p" : "Paper",
+  "s" : "Scissors",
+  "sp" : "Spock",
+  "l" : "Lizard"
 }
