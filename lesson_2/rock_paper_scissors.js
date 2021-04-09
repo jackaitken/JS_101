@@ -1,6 +1,8 @@
 const readline = require('readline-sync');
 const MSG = require('./rps_messages.json');
 const VALID_CHOICES = ['r', 'p', 's', 'sp', 'l'];
+let userWinCount = 0;
+let cpuWinCount = 0;
 
 const WIN_SCENARIOS_OBJ = {
   r: ['s', 'l'],
@@ -10,14 +12,22 @@ const WIN_SCENARIOS_OBJ = {
   l: ['sp', 'p']
 };
 
-let userWinCount = 0;
-let cpuWinCount = 0;
-
 let declaredFinalWinner = () => userWinCount === 5 || cpuWinCount === 5;
 
 let prompt = message => console.log(`=> ${message}`);
 
-let validMove = userChoice => VALID_CHOICES.includes(userChoice);
+let validMove = move => VALID_CHOICES.includes(move);
+
+let getUserChoice = () => {
+  let move = readline.question();
+
+  while (!validMove(move)) {
+    prompt('Please choose a valid move');
+    prompt(MSG.initialPrompt);
+    move = readline.question();
+  }
+  return move;
+};
 
 let returnGameWinner = (userChoice, cpuChoice) => {
   if (userChoice === cpuChoice) {
@@ -44,13 +54,8 @@ while (true) {
   prompt(`You: ${userWinCount} Computer: ${cpuWinCount}`);
 
   prompt(MSG.initialPrompt);
-  let userChoice = readline.question();
 
-  while (!validMove(userChoice)) {
-    prompt('Please choose a valid move');
-    prompt(MSG.initialPrompt);
-    userChoice = readline.question();
-  }
+  let userChoice = getUserChoice();
 
   prompt(`You chose: ${MSG[userChoice]}`);
 
