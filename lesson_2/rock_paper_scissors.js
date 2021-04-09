@@ -76,7 +76,7 @@ while (true) {
     break;
   }
 
-  prompt(`${MSG.cpuChose} ${MSG[cpuChoice]}`);
+  prompt(`The computer chose: ${MSG[cpuChoice]}`);
 
   if (gameWinner === 1) {
     prompt('You won that round!');
