@@ -12,7 +12,7 @@ const WIN_SCENARIOS_OBJ = {
   l: ['sp', 'p']
 };
 
-let declareFinalWinner = () => userWinCount === 5 || cpuWinCount === 5;
+let declareGrandWinner = () => userWinCount === 5 || cpuWinCount === 5;
 
 let prompt = message => console.log(`=> ${message}`);
 
@@ -65,7 +65,7 @@ while (true) {
   let gameWinner = returnGameWinner(userChoice, cpuChoice);
   updateScore(gameWinner);
 
-  if (declareFinalWinner()) {
+  if (declareGrandWinner()) {
     console.clear();
     if (userWinCount > cpuWinCount) {
       prompt("You're the grand winner!");
