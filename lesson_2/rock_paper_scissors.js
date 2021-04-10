@@ -29,7 +29,17 @@ let getUserChoice = () => {
   return move;
 };
 
-let returnGameWinner = (userChoice, cpuChoice) => {
+let displayRoundWinner = gameWinner => {
+  if (gameWinner === 1) {
+    prompt('You won that round!');
+  } else if (gameWinner === -1) {
+    prompt('The computer won that round.');
+  } else {
+    prompt('That round was a tie.');
+  }
+};
+
+let returnRoundWinner = (userChoice, cpuChoice) => {
   if (userChoice === cpuChoice) {
     return 0;
   } else if (WIN_SCENARIOS_OBJ[userChoice].includes(cpuChoice)) {
@@ -58,18 +68,6 @@ let displayGrandWinner = () => {
   prompt(`Final Score: ${userWinCount} - ${cpuWinCount}`);
 };
 
-let displayRoundWinner = gameWinner => {
-  if (gameWinner === 1) {
-    prompt('You won that round!');
-  } else if (gameWinner === -1) {
-    prompt('The computer won that round.');
-  } else {
-    prompt('That round was a tie.');
-  }
-};
-
-let validContinueKey = key => key === 'n' || key === 'y';
-
 let playAgain = () => {
   prompt("Want to play again? 'y' or 'n'");
   let continuePlayingKey = readline.question().toLowerCase();
@@ -83,6 +81,8 @@ let playAgain = () => {
   }
   return true;
 };
+
+let validContinueKey = key => key === 'n' || key === 'y';
 
 let resetScore = () => {
   userWinCount = 0;
@@ -103,7 +103,7 @@ while (true) {
   let randomIndex = Math.floor(Math.random() * VALID_CHOICES.length);
   let cpuChoice = VALID_CHOICES[randomIndex];
 
-  let gameWinner = returnGameWinner(userChoice, cpuChoice);
+  let gameWinner = returnRoundWinner(userChoice, cpuChoice);
   updateScore(gameWinner);
 
   if (gameOver()) {
