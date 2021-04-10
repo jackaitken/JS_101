@@ -19,14 +19,14 @@ let prompt = message => console.log(`=> ${message}`);
 let validMove = move => VALID_CHOICES.includes(move);
 
 let getUserChoice = () => {
-  let move = readline.question();
+  let move = readline.question().toLowerCase();
 
-  while (!validMove(move.toLowerCase())) {
+  while (!validMove(move)) {
     prompt('Please choose a valid move');
-    prompt(MSG.initialPrompt);
-    move = readline.question();
+    prompt(MSG.chooseMove);
+    move = readline.question().toLowerCase();
   }
-  return move.toLowerCase();
+  return move;
 };
 
 let returnGameWinner = (userChoice, cpuChoice) => {
@@ -94,7 +94,7 @@ while (true) {
 
   prompt(`You: ${userWinCount} Computer: ${cpuWinCount}`);
 
-  prompt(MSG.initialPrompt);
+  prompt(MSG.chooseMove);
 
   let userChoice = getUserChoice();
 

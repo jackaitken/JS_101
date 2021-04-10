@@ -1,5 +1,5 @@
 {
-  "initialPrompt" : "'r': rock, 'p': paper, 's': scissors, 'sp': spock, 'l': lizard",
+  "chooseMove" : "'r': rock, 'p': paper, 's': scissors, 'sp': spock, 'l': lizard",
   "r" : "Rock",
   "p" : "Paper",
   "s" : "Scissors",
