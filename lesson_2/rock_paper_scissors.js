@@ -68,6 +68,8 @@ let displayGrandWinner = () => {
   prompt(`Final Score: ${userWinCount} - ${cpuWinCount}`);
 };
 
+let validContinueKey = key => key === 'n' || key === 'y';
+
 let playAgain = () => {
   prompt("Want to play again? 'y' or 'n'");
   let continuePlayingKey = readline.question().toLowerCase();
@@ -81,8 +83,6 @@ let playAgain = () => {
   }
   return true;
 };
-
-let validContinueKey = key => key === 'n' || key === 'y';
 
 let resetScore = () => {
   userWinCount = 0;
