@@ -1,6 +1,7 @@
-let names = ['daph', 'jack', 'arlo'];
+let func = s => s + s;
 
-names.forEach((_, index) => {
-  console.log(index);
-  console.log(`${index + 1}: got a name!`);
-});
+let str = 'abc';
+
+console.log(func(str));
+
+console.log(str);
