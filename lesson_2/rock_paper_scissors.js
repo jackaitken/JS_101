@@ -1,6 +1,7 @@
 const readline = require('readline-sync');
 const MSG = require('./rps_messages.json');
 const VALID_CHOICES = ['r', 'p', 's', 'sp', 'l'];
+const WIN_SCORE = 5;
 let userWinCount = 0;
 let cpuWinCount = 0;
 
@@ -12,7 +13,7 @@ const WIN_SCENARIOS_OBJ = {
   l: ['sp', 'p']
 };
 
-let gameOver = () => userWinCount === 5 || cpuWinCount === 5;
+let gameOver = () => userWinCount === WIN_SCORE || cpuWinCount === WIN_SCORE;
 
 let prompt = message => console.log(`=> ${message}`);
 
