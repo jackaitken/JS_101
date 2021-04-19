@@ -20,7 +20,7 @@ Algorithm
 */
 
 let stringToInteger = str => {
-  const numObj = {
+  const NUMS = {
     0: 0,
     1: 1,
     2: 2,
@@ -33,11 +33,12 @@ let stringToInteger = str => {
     9: 9
   };
 
-  let numArr = [];
-  for (let i in str) {
-    numArr.push(numObj[str[i]]);
-  };
-  return numArr.join('');
+  let mappedArr = str.split('').map(char => NUMS[char]);
+
+  let value = 0;
+  mappedArr.forEach(num => (value = (value * 10) + num));
+
+  return value;
 };
 
-console.log(typeof (stringToInteger("308184720")));
+console.log(stringToInteger("308184720"));
