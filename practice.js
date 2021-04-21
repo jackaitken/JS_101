@@ -1,20 +1,14 @@
-let sumOfMultiples = (targetNumber, factors) => {
-  let multiples = [];
-  if (factors.length === 0) {
-    factors = [3, 5];
-  }
-
-  factors.forEach(factor => {
-    for (let i = factor; i < targetNumber; i += factor) {
-      if (multiples.indexOf(i) === -1) {
-        multiples.push(i);
-      }
-    }
-  });
-  return multiples.reduce((sum, value) => {
-    return sum + value;
-  }, 0);
+const textObject = {
+  text: "Remove occurances of the letter e after the word 'letter' in this sentence"
 };
 
+Object.freeze(textObject);
 
-console.log(sumOfMultiples(20, [3, 5]));  // returns 78
+// My code below
+
+let textStr = Object.values(textObject).join('');
+const regex = /e/g;
+
+let resultStr = textStr.slice(0, 31) + textStr.slice(32).replace(regex, '');
+console.log(resultStr);
+
