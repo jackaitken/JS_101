@@ -1,7 +1,5 @@
-let animal = {
-  bear: 'grizzly',
-  fish: 'salmon',
-  dog: 'golden retriever'
-};
+let arr = [];
 
-console.log(Object.values(animal).some(value => value.length > 50));
+arr.length = 5;
+console.log(arr.length);
+console.log(Object.keys(arr));
