@@ -58,6 +58,10 @@ let multiSum = num => {
   return multiSumArr.reduce((acc, elem) => {
     return acc + elem;
   }, 0);
+
 };
 
-console.log(multiSum(1000));
+console.log(multiSum(3));       // 3
+console.log(multiSum(5));       // 11
+console.log(multiSum(10));      // 44
+console.log(multiSum(1000));    // 234212
