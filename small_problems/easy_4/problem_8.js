@@ -2,10 +2,10 @@ let wordSizes = text => {
   let lengthObj = {};
 
   text.split(' ').forEach(word => {
-    if (lengthObj[word]) {
-      lengthObj += 1;
+    if (lengthObj[word.length]) {
+      lengthObj[word.length] += 1;
     } else {
-      lengthObj[word] = 1;
+      lengthObj[word.length] = 1;
     }
   });
   return lengthObj;
