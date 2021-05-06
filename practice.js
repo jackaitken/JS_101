@@ -1,21 +1,42 @@
-let munsters = {
-  Herman: { age: 32, gender: 'male' },
-  Lily: { age: 30, gender: 'female' },
-  Grandpa: { age: 402, gender: 'male' },
-  Eddie: { age: 10, gender: 'male' },
-  Marilyn: { age: 23, gender: 'female'}
+let obj = {
+  a: 1,
+  b: 2
 };
 
-Object.entries(munsters).forEach(munster => {
-  let name = munster[0];
-  let age = munster[1].age;
-  let gender = munster[1].gender;
+function shadows(a) {
+  debugger;
+  console.log(obj[a]);
+  console.log(obj.a);
+}
 
-  console.log(`${name} is a ${age}-year-old ${gender}`);
-});
+shadows('b');
+
+/*
+- We need to return a valid UUID.
+- A UUID is a string that contains 32 hexadecimal characters split into 5
+  sections: 'f65c57f6-a6aa-17a8-faa1-a67f2dc9fa91'
+- 8 - 4 - 4 - 4 - 12
+- We need to write a function that takes no arguments, but returns a
+  valid UUID in string format
+
+- ALGORITHM
+- first we need to define valid characters:
+  - 0 - 9 and a - f
+  - perhaps we could do this with an array that stores
+    these values in their respective indexes
+- Then we can create a 32 character string.
+- Afterward we can insert the hyphens in the right places
+
+- So now we have our 32 character array, we need to figure out how to insert the
+  hyphens
+*/
 
 
 
+/*
+- We base our sort order on the sum of the odd numbers in the subarray
+- We need to check the 
+*/
 
 
 /*
