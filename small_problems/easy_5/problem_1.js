@@ -61,25 +61,55 @@ ALGORITHM:
   - Then we can use a template literal to log out our result.
 */
 
-let dms = angle => {
+function dms(angle) {
   const HOUR_MINUTE_FORMULA = 60;
-  let degrees = Math.floor(angle);
 
-  let stringHours = String(angle);
-  let hoursOperand = stringHours.slice(stringHours.indexOf('.'));
-  let numHours = Number(hoursOperand).toFixed(2);
-  let hours = Math.trunc(numHours * HOUR_MINUTE_FORMULA);
+  if (angle < 0 || angle > 360) {
+    angle = getCorrectBearing(angle);
+  }
 
-  let minutesOperand = stringHours.slice(stringHours.indexOf('.'));
-  let numMinutes = Number(minutesOperand).toFixed(2);
-  let minutes = Math.trunc(numMinutes * HOUR_MINUTE_FORMULA);
+  let degrees = String(Math.floor(angle));
 
-  console.log(`${degrees}˚${minutes}'${hours}"`);
+  let decimalMinutes = angle - degrees;
+  let rawMinutes = decimalMinutes * HOUR_MINUTE_FORMULA;
+  let truncMinutes = Math.trunc(rawMinutes);
+
+  let decimalSeconds = rawMinutes - truncMinutes;
+  let rawSeconds = decimalSeconds * HOUR_MINUTE_FORMULA;
+  let truncSeconds = Math.trunc(rawSeconds);
+
+  let minutes = padMinutesSeconds(truncMinutes);
+  let seconds = padMinutesSeconds(truncSeconds);
+
+  console.log(`${degrees}°${minutes}'${seconds}"`);
 };
 
-dms(30);           // 30°00'00"
-dms(76.73);        // 76°43'48"
-dms(254.6);        // 254°35'59"
-dms(93.034773);    // 93°02'05"
-dms(0);            // 0°00'00"
-dms(360);          // 360°00'00" or 0°00'00"
+function padMinutesSeconds(num) {
+  let stringNum = String(num);
+  let paddedNum = stringNum.padStart(2, 0);
+  return paddedNum;
+}
+
+function getCorrectBearing(angle) {
+  let degrees;
+
+  if (angle < 0) {
+    do {
+      degrees = angle + 360;
+    } while (degrees < 0);
+  } else if (angle > 360) {
+    do {
+      degrees = angle - 360;
+    } while (degrees > 360);
+  }
+  debugger;
+  return degrees;
+}
+
+
+dms(400);
+dms(-40);
+dms(254.6);
+dms(93.034773);
+dms(0);
+dms(360);
