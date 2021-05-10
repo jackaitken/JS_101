@@ -5,6 +5,10 @@ const CPU_MARKER = '0';
 let currentPlayer = HUMAN_MARKER;
 let board = initializeBoard();
 
+function prompt(msg) {
+  console.log(`=> ${msg}`);
+}
+
 while (true) {
   console.clear();
   displayBoard(board);
@@ -22,7 +26,13 @@ while (true) {
   board[row][column] = HUMAN_MARKER;
 
   let [cpuRow, cpuCol] = getCpuMove(board);
-  board[cpuRow][cpuCol] = 'O';
+  board[cpuRow][cpuCol] = CPU_MARKER;
+  console.clear();
+
+  displayBoard(board);
+  prompt(`Computer chose row ${cpuRow + 1}, column ${cpuCol + 1}`);
+  prompt('Press enter to continue');
+  readline.prompt();
 }
 
 function initializeBoard() {
@@ -48,10 +58,6 @@ function displayBoard(boardState) {
   console.log(`3    ${boardState[2][0]}  |  ${boardState[2][1]}  |  ${boardState[2][2]}`);
   console.log(`        |     |`);
   console.log('');
-}
-
-function prompt(msg) {
-  console.log(`=> ${msg}`);
 }
 
 function getPlayerMove(colRow) {
