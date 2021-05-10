@@ -1,6 +1,6 @@
-let arr = [1, 2, 3, 4, 5];
+let func = (arr) => {
+  return arr.map(num => num + 2);
+};
 
-for (let i of arr) {
-  console.log(i);
-  debugger;
-}
+console.log(func([2, 3, 4, 5]));
+
