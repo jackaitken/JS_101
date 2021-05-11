@@ -1,17 +1,18 @@
 const EMPTY_SQUARE = ' ';
 
 function getCpuMove(board) {
-  let validMoves = [];
-
-  board.forEach((row, rowIndx) => {
-    row.forEach((cell, colIndx) => {
-      if (cell === EMPTY_SQUARE) {
-        validMoves.push([rowIndx, colIndx]);
+  let validMoves = board.map((row, rowIndx) => {
+    return row.reduce((arr, elem, colIndx) => {
+      if (elem === EMPTY_SQUARE) {
+        arr.push(rowIndx, colIndx);
       }
-    });
+      return arr;
+    }, []);
   });
-  let randIndx = Math.floor(Math.random() * validMoves.length);
-  return validMoves[randIndx];
+  return validMoves;
+
+  // let randIndx = Math.floor(Math.random() * validMoves.length);
+  // return validMoves[randIndx];
 }
 
 let board = [
@@ -20,4 +21,4 @@ let board = [
   [' ', ' ', ' ']
 ];
 
-setTimeout(() => getCpuMove(board), 500);
+console.log(getCpuMove(board));
