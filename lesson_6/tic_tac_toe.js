@@ -109,44 +109,75 @@ function detectWinner(board) {
   }
 }
 
+function playAgain() {
+  prompt('Do you want to keep playing? (y or n)');
+  let answer = readline.question('> ');
+
+  while (!validContinueKey(answer)) {
+    prompt('Sorry, please enter either y or n');
+    answer = readline.question('> ');
+  }
+  return answer;
+}
+
+function validContinueKey(key) {
+  if (key !== 'y' && key !== 'n') {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function resetBoard(board) {
+  board = [Array(3).fill(' '), Array(3).fill(' '), Array(3).fill(' ')];
+  return board;
+}
 
 while (true) {
-  displayBoard(board);
-
-  let row = getPlayerMove('row');
-  let column = getPlayerMove('column');
-
-  while (!isEmpty(row, column, board)) {
+  while (true) {
     displayBoard(board);
-    prompt('Please choose an empty space');
-    row = getPlayerMove('row');
-    column = getPlayerMove('column');
+
+    let row = getPlayerMove('row');
+    let column = getPlayerMove('column');
+
+    while (!isEmpty(row, column, board)) {
+      displayBoard(board);
+      prompt('Please choose an empty space');
+      row = getPlayerMove('row');
+      column = getPlayerMove('column');
+    }
+
+    board[row][column] = HUMAN_MARKER;
+
+    if (isWinner(board) || isTie(board)) {
+      break;
+    }
+
+    let [cpuRow, cpuCol] = getCpuMove(board);
+    board[cpuRow][cpuCol] = CPU_MARKER;
+
+    if (isWinner(board) || isTie(board)) {
+      break;
+    }
+
+    displayBoard(board);
+    prompt(`Computer chose row ${cpuRow + 1}, column ${cpuCol + 1}`);
+
+    prompt('Press enter to continue');
+    readline.prompt();
   }
 
-  board[row][column] = HUMAN_MARKER;
+  if (isWinner) {
+    displayBoard(board);
+    prompt(`${detectWinner(board)} won!`);
+  } else {
+    prompt('Game ended in a tie');
+  }
 
-  if (isWinner(board) || isTie(board)) {
+  if (playAgain() === 'n') {
+    prompt('Okay! See ya later');
     break;
+  } else {
+    board = initializeBoard();
   }
-
-  let [cpuRow, cpuCol] = getCpuMove(board);
-  board[cpuRow][cpuCol] = CPU_MARKER;
-
-  if (isWinner(board) || isTie(board)) {
-    break;
-  }
-
-  displayBoard(board);
-  prompt(`Computer chose row ${cpuRow + 1}, column ${cpuCol + 1}`);
-
-  prompt('Press enter to continue');
-  readline.prompt();
 }
-
-if (isWinner) {
-  displayBoard(board);
-  prompt(`${detectWinner(board)} won!`);
-} else {
-  prompt('Game ended in a tie');
-}
-
