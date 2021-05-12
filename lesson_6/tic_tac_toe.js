@@ -17,6 +17,7 @@ function initializeBoard() {
 }
 
 function displayBoard(boardState) {
+  console.clear();
   console.log('');
   console.log('     1     2     3');
   console.log(`        |     |`);
@@ -77,26 +78,63 @@ function isTie(board) {
   });
 }
 
+function isWinner(board) {
+  return !!detectWinner(board);
+}
+
+function detectWinner(board) {
+  let winningScenarios = [
+    [[0, 0], [0, 1], [0, 2]], [[1, 0], [1, 1], [1, 2]], // rows
+    [[2, 0], [2, 1], [2, 2]], 
+    [[0, 0], [1, 0], [2, 0]], [[1, 0], [1, 1], [1, 2]], // columns
+    [[2, 0], [2, 1], [2, 2]],
+    [[0, 0], [1, 1], [2, 2]], [[2, 0], [1, 1], [0, 2]], // diagonals
+  ];
+
+  for (let row of winningScenarios) {
+    let [sq1, sq2, sq3] = row;
+    if (
+      board[sq1[0]][sq1[1]] === HUMAN_MARKER &&
+      board[sq2[0]][sq2[1]] === HUMAN_MARKER &&
+      board[sq3[0]][sq3[1]] === HUMAN_MARKER
+    ) {
+      return 'Player';
+    } else if (
+      board[sq1[0]][sq1[1]] === CPU_MARKER &&
+      board[sq2[0]][sq2[1]] === CPU_MARKER &&
+      board[sq3[0]][sq3[1]] === CPU_MARKER
+    ) {
+      return 'Computer';
+    }
+  }
+}
+
+
 while (true) {
-  console.clear();
   displayBoard(board);
 
-  let row = getPlayerMove();
-  let column = getPlayerMove();
+  let row = getPlayerMove('row');
+  let column = getPlayerMove('column');
 
-  // Ensure that row and column are empty squares
+  while (!isEmpty(row, column, board)) {
+    displayBoard(board);
+    prompt('Please choose an empty space');
+    row = getPlayerMove('row');
+    column = getPlayerMove('column');
+  }
 
   board[row][column] = HUMAN_MARKER;
 
-  if (isTie(board)) {
-    console.clear();
-    displayBoard(board);
-    return prompt('Game ended in a tie');
+  if (isWinner(board) || isTie(board)) {
+    break;
   }
 
   let [cpuRow, cpuCol] = getCpuMove(board);
   board[cpuRow][cpuCol] = CPU_MARKER;
-  console.clear();
+
+  if (isWinner(board) || isTie(board)) {
+    break;
+  }
 
   displayBoard(board);
   prompt(`Computer chose row ${cpuRow + 1}, column ${cpuCol + 1}`);
@@ -104,3 +142,11 @@ while (true) {
   prompt('Press enter to continue');
   readline.prompt();
 }
+
+if (isWinner) {
+  displayBoard(board);
+  prompt(`${detectWinner(board)} won!`);
+} else {
+  prompt('Game ended in a tie');
+}
+
