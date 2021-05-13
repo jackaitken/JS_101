@@ -2,6 +2,9 @@ const readline = require('readline-sync');
 const EMPTY_SQUARE = ' ';
 const HUMAN_MARKER = 'X';
 const CPU_MARKER = '0';
+const WIN_SCORE = 5;
+let playerWins = 0;
+let cpuWins = 0;
 let board = initializeBoard();
 
 function prompt(msg) {
@@ -32,6 +35,10 @@ function displayBoard(boardState) {
   console.log(`3    ${boardState[2][0]}  |  ${boardState[2][1]}  |  ${boardState[2][2]}`);
   console.log(`        |     |`);
   console.log('');
+}
+
+function displayScores(playerWins, cpuWins) {
+  console.log(`Player: ${playerWins} Computer: ${cpuWins}`);
 }
 
 function getPlayerMove(rowCol) {
@@ -68,8 +75,31 @@ function getCpuMove(board) {
       }
     });
   });
-  let randIndx = Math.floor(Math.random() * validMoves.length);
-  return validMoves[randIndx];
+
+  let possibleOpponentWin = checkForOpponentWinScenario(validMoves);
+
+  if (possibleOpponentWin) {
+    return possibleOpponentWin;
+  } else {
+    let randIndx = Math.floor(Math.random() * validMoves.length);
+    return validMoves[randIndx];
+  }
+}
+
+function checkForOpponentWinScenario(arr) {
+  let boardCopy = [...board];
+
+  for (let pair of arr) {
+    boardCopy[pair[0]][pair[1]] = 'X';
+    let isWinningSquare = isWinner(boardCopy);
+
+    if (isWinningSquare) {
+      return pair;
+    } else {
+      boardCopy[pair[0]][pair[1]] = ' ';
+    }
+  }
+  return false;
 }
 
 function isTie(board) {
@@ -86,8 +116,8 @@ function detectWinner(board) {
   let winningScenarios = [
     [[0, 0], [0, 1], [0, 2]], [[1, 0], [1, 1], [1, 2]], // rows
     [[2, 0], [2, 1], [2, 2]], 
-    [[0, 0], [1, 0], [2, 0]], [[1, 0], [1, 1], [1, 2]], // columns
-    [[2, 0], [2, 1], [2, 2]],
+    [[0, 0], [1, 0], [2, 0]], [[0, 1], [1, 1], [2, 1]], // columns
+    [[0, 2], [1, 2], [2, 2]],
     [[0, 0], [1, 1], [2, 2]], [[2, 0], [1, 1], [0, 2]], // diagonals
   ];
 
@@ -110,7 +140,7 @@ function detectWinner(board) {
 }
 
 function playAgain() {
-  prompt('Do you want to keep playing? (y or n)');
+  prompt('Are you ready for the next round? (y or n)');
   let answer = readline.question('> ');
 
   while (!validContinueKey(answer)) {
@@ -128,14 +158,23 @@ function validContinueKey(key) {
   }
 }
 
-function resetBoard(board) {
-  board = [Array(3).fill(' '), Array(3).fill(' '), Array(3).fill(' ')];
-  return board;
+function updateScore(winner) {
+  winner === 'Player' ? playerWins += 1 : cpuWins += 1;
+}
+
+function grandWinnerExists(playerScore, cpuScore) {
+  if (playerScore >= WIN_SCORE) {
+    return 'Player';
+  } else if (cpuScore >= WIN_SCORE) {
+    return 'Computer';
+  }
+  return false;
 }
 
 while (true) {
   while (true) {
     displayBoard(board);
+    displayScores(playerWins, cpuWins);
 
     let row = getPlayerMove('row');
     let column = getPlayerMove('column');
@@ -167,9 +206,18 @@ while (true) {
     readline.prompt();
   }
 
-  if (isWinner) {
+  if (isWinner(board)) {
     displayBoard(board);
-    prompt(`${detectWinner(board)} won!`);
+    let winner = detectWinner(board);
+    prompt(`${winner} won!`);
+    updateScore(winner);
+
+    let grandWinner = grandWinnerExists(playerWins, cpuWins);
+
+    if (grandWinner) {
+      prompt(`${grandWinner} is the grand winner!`);
+      break;
+    }
   } else {
     prompt('Game ended in a tie');
   }
@@ -181,3 +229,4 @@ while (true) {
     board = initializeBoard();
   }
 }
+
