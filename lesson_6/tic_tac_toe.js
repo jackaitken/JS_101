@@ -65,7 +65,7 @@ function isEmpty(row, column, board) {
   return board[row][column] === EMPTY_SQUARE;
 }
 
-function getCpuMove(board) {
+function getAvailableMoves(board) {
   let validMoves = [];
 
   board.forEach((row, rowIndx) => {
@@ -75,6 +75,13 @@ function getCpuMove(board) {
       }
     });
   });
+  return validMoves;
+}
+
+function getCpuMove(board) {
+  const MIDDLE_SQAURE = [1, 1];
+
+  let validMoves = getAvailableMoves(board);
 
   let possibleCpuWin = checkForWinScenario(validMoves, CPU_MARKER);
 
@@ -86,6 +93,10 @@ function getCpuMove(board) {
 
   if (possibleOpponentWin) {
     return possibleOpponentWin;
+  }
+
+  if (findMiddleSquare(validMoves)) {
+    return MIDDLE_SQAURE;
   }
 
   let randIndx = Math.floor(Math.random() * validMoves.length);
@@ -103,6 +114,18 @@ function checkForWinScenario(arr, player) {
       return pair;
     } else {
       boardCopy[pair[0]][pair[1]] = EMPTY_SQUARE;
+    }
+  }
+  return false;
+}
+
+function findMiddleSquare(availableMoves) {
+  const EMPTY_SQUARE = '11';
+
+  for (let pair of availableMoves) {
+    let [num1, num2] = pair;
+    if (String(num1) === EMPTY_SQUARE[0] && String(num2) === EMPTY_SQUARE[1]) {
+      return true;
     }
   }
   return false;
