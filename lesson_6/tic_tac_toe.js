@@ -76,27 +76,33 @@ function getCpuMove(board) {
     });
   });
 
-  let possibleOpponentWin = checkForOpponentWinScenario(validMoves);
+  let possibleCpuWin = checkForWinScenario(validMoves, CPU_MARKER);
+
+  if (possibleCpuWin) {
+    return possibleCpuWin;
+  }
+
+  let possibleOpponentWin = checkForWinScenario(validMoves, HUMAN_MARKER);
 
   if (possibleOpponentWin) {
     return possibleOpponentWin;
-  } else {
-    let randIndx = Math.floor(Math.random() * validMoves.length);
-    return validMoves[randIndx];
   }
+
+  let randIndx = Math.floor(Math.random() * validMoves.length);
+  return validMoves[randIndx];
 }
 
-function checkForOpponentWinScenario(arr) {
+function checkForWinScenario(arr, player) {
   let boardCopy = [...board];
 
   for (let pair of arr) {
-    boardCopy[pair[0]][pair[1]] = 'X';
+    boardCopy[pair[0]][pair[1]] = player;
     let isWinningSquare = isWinner(boardCopy);
 
     if (isWinningSquare) {
       return pair;
     } else {
-      boardCopy[pair[0]][pair[1]] = ' ';
+      boardCopy[pair[0]][pair[1]] = EMPTY_SQUARE;
     }
   }
   return false;
