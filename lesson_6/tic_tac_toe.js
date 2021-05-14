@@ -179,7 +179,6 @@ function playAgain() {
   return answer;
 }
 
-
 function validContinueKey(key) {
   if (key !== 'y'.toLowerCase() && key !== 'n'.toLowerCase()) {
     return false;
