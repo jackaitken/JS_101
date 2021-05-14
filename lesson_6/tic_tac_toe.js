@@ -179,8 +179,9 @@ function playAgain() {
   return answer;
 }
 
+
 function validContinueKey(key) {
-  if (key !== 'y' && key !== 'n') {
+  if (key !== 'y'.toLowerCase() && key !== 'n'.toLowerCase()) {
     return false;
   } else {
     return true;
