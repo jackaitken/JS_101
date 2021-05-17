@@ -14,8 +14,10 @@ Game loop
 7. At the end the final card total's are comapred
 */
 
+let readline = require('readline-sync');
+
 let deck = {
-  Ace: {value: 11, remaining: 4},
+  Ace: {remaining: 4},
   King: {value: 10, remaining: 4},
   Queen: {value: 10, remaining: 4},
   Jack: {value: 10, remaining: 4},
@@ -30,12 +32,18 @@ let deck = {
   2: {value: 2, remaining: 4},
 };
 
+let shuffledDeck = initializeDeck();
+
+function prompt(message) {
+  console.log(`=> ${message}`);
+}
+
 function initializeDeck() { // FY shuffle - Copied from Launch School
   let deckArray = getCardsArray();
 
   for (let index = deckArray.length - 1; index > 0; index--) {
     let otherIndex = Math.floor(Math.random() * (index + 1)); // 0 to index
-    [deckArray[index], deckArray[otherIndex]] = 
+    [deckArray[index], deckArray[otherIndex]] =
     [deckArray[otherIndex], deckArray[index]]; // swap elements
   }
   return deckArray;
@@ -53,36 +61,160 @@ function getCardsArray() {
   return deckArray;
 }
 
-function initialDeal(deck) {
-  let playerFirstCard = deck.shift();
-  let playerSecondCard = deck.shift();
+function initialDeal(shuffledDeck) {
+  let firstCard = shuffledDeck.shift();
+  let secondCard = shuffledDeck.shift();
 
-  let cpuFirstCard = deck.shift();
-  let cpuSecondCard = deck.shift();
-
-  return [
-    playerFirstCard, playerSecondCard,
-    cpuFirstCard, cpuSecondCard
-  ];
+  return [firstCard, secondCard];
 }
 
-function displayInitialDeal(shuffledDeck) {
-  let [pFirst, pSecond, cFirst, cSecond] = initialDeal(shuffledDeck);
-  console.log(pFirst, pSecond);
-  console.log(cFirst, 'unknown');
+function displayPlayerHand(playerHand) {
+  console.log(`You have: ${playerHand[0]} and ${playerHand[1]}`);
 }
 
-let shuffledDeck = initializeDeck();
-displayInitialDeal(shuffledDeck);
+function displayDealerHand(dealerHand) {
+  console.log(`Dealer has: ${dealerHand[0]} and unknown`);
+}
 
+function dispayNewCard(newCard) {
+  prompt(newCard);
+}
 
+function handValue(hand) {
+  const ACE_VALUE = 11;
+  let curValue = 0;
 
+  for (let card of hand) {
+    if (card === 'Ace') {
+      curValue += ACE_VALUE;
+    } else {
+      curValue += getNonAceValue(card);
+    }
+  }
+  return curValue;
+}
 
-// while (true) {
-  // shuffleDeck()
-  // dealCards
-  // while (true){
-    // hit or stay
-    // if stay or busted() break
-  //}
-// }
+function getNonAceValue(card) {
+  return deck[card].value;
+}
+
+function getPlayerDecision(hand) {
+  while (true) {
+    prompt('Hit or Stay?');
+    let answer = readline.question().toLowerCase();
+    if (answer === 'stay' || busted(hand)) {
+      break;
+    } else {
+      let newCard = dealNewCard(shuffledDeck);
+      hand.push(newCard);
+      if (busted(hand)) break;
+    }
+  }
+
+  if (busted(hand)) {
+    prompt('You busted');
+  } else {
+    prompt('You stayed');
+    prompt('Dealer will now draw');
+  }
+}
+
+function busted(hand) {
+  const VARYING_ACE_VALUE = 10;
+  let curHandValue = handValue(hand);
+
+  if (curHandValue < 21) {
+    return false;
+  } else if (curHandValue > 21) {
+    hand.forEach(card => {
+      if (card === 'Ace') {
+        curHandValue -= VARYING_ACE_VALUE;
+      }
+    });
+  }
+
+  if (curHandValue > 21) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function dealNewCard(shuffledDeck) {
+  let newCard = shuffledDeck.shift();
+  dispayNewCard(newCard);
+  return newCard;
+}
+
+function playDealerHand(dealerHand) {
+  let curHandValue = handValue(dealerHand);
+
+  while (!busted(dealerHand) && curHandValue < 17) {
+    let newCard = dealNewCard(shuffledDeck);
+    dealerHand.push(newCard);
+    curHandValue = handValue(dealerHand);
+  }
+
+  return dealerHand;
+}
+
+function playAgain() {
+  prompt('Do you want to play again? (y or n)');
+  let answer = readline.question();
+
+  if (answer === 'n') {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+// Game Loop
+while (true) {
+  while (true) {
+    console.clear();
+    let playerHand = initialDeal(shuffledDeck);
+    let dealerHand = initialDeal(shuffledDeck);
+
+    displayPlayerHand(playerHand);
+    displayDealerHand(dealerHand);
+
+    if (handValue(playerHand) === 21) {
+      prompt('Blackjack!');
+    } else {
+      getPlayerDecision(playerHand);
+      if (busted(playerHand)) {
+        break;
+      }
+    }
+
+    if (handValue(dealerHand) === 21) {
+      prompt('Dealer has Blackjack');
+    } else {
+      let curDealerHand = playDealerHand(dealerHand);
+      if (busted(curDealerHand)) {
+        prompt('Dealer busted. You win!');
+        break;
+      }
+    }
+
+    let finalPlayerValue = handValue(playerHand);
+    let finalDealeralue = handValue(dealerHand);
+
+    prompt(`You had ${finalPlayerValue} dealer had ${finalDealeralue}`);
+    if (finalPlayerValue > finalDealeralue) {
+      prompt('You won!');
+    } else if (finalPlayerValue === finalDealeralue) {
+      prompt("It's a tie");
+    } else {
+      prompt('Dealer won');
+    }
+    break;
+  }
+  let keepPlaying = playAgain();
+  if (!keepPlaying) {
+    prompt('Thanks for playing');
+    break;
+  }
+  shuffledDeck = initializeDeck();
+}
