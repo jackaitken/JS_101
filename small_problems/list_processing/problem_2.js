@@ -4,10 +4,12 @@ const alphabeticNumberSort = arr => {
     'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'
   ];
 
-  arrMap.sort();
+  let alphaNumArr = arr.map((_, index) => {
+    return arrMap[index];
+  }).sort();
 
-  arr.map()
+  return alphaNumArr.map()
 };
 
-console.log(alphabeticNumberSort([123]));
+console.log(alphabeticNumberSort([1, 2, 3, 4]));
 
