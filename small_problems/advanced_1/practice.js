@@ -1,73 +1,63 @@
 /*
-Given an array of strings
-determine which characters occur in all strings
+Given two strings
+we need to determine if both strings
+have a matching substring
 
 Rules:
-  - this includes duplicates
-    - so with this:
-      'bella', 'roller', 'label'
-    - 'l' occurs twice in each string so it should
-      be included twice in the returned matches
-  - lowercase only
+  - only consider substrings that are longer than one letter
+  - looks like it should be case insensitive
+  - two empty strings do not share substrings
 
-['bella', 'label', 'roller']
+Examples:
+  - 'Something' 'Home'
+  - 'om' and 'om' are the first matching substring
 
-What if we used the first string as a working
-string
+supercalifragilisticexpialidocious
+SoundOfItIsAtrociou
 
-we could start with the first char
-iterate through the rest of the strings
-and check if that character exists in the
-other strings
-
-if it does we should remove that character from the other strings
-
+1234567
+541265
 
 Algorithm:
-  - shift out first array element as our compareString
-  - let commons = []
-  - iterate through compare string:
-    - use ith character as compare char
-    - counter = 0
-    - iterate through rest of array:
-      - if comparechar is in string
-        - splice that out of the string
-        - counter += 1;
-    - if counter == array.length
-      - push comparechar to commons
-
+  - first check that the input strings are longer than 1 character
+  - find ALL substrings of both str1 and str2 that are longer than
+    - 1 character
+  - make sure they're all lower case
+  - iterate over first set of substrings
+  - check if that substring is in the other set
 */
 
-function commonChars(array) {
-  let compareString = array.shift();
-  let commons = [];
+function substringTest(str1, str2) {
+  let str1Substrs = getSubstrs(str1);
+  let str2Substrs = getSubstrs(str2);
 
-  compareString.split('').forEach(char => {
-    let counter = 0;
-    array.forEach(word => {
-      if (word.includes(char)) {
-        let index = word.indexOf(char);
-        word = removeChar(word, index);
-        counter += 1;
-      }
-    });
-    if (counter === array.length) {
-      commons.push(char);
+  for (let i = 0; i < str1Substrs.length; i++) {
+    if (str2Substrs.includes(str1Substrs[i])) {
+      return true;
     }
-  });
-  return commons;
+  }
+  return false;
+}
+
+function getSubstrs(string) {
+  let substrs = [];
+  string = string.toLowerCase();
+
+  for (let i = 0; i < string.length; i++) {
+    for (let j = i + 2; j < string.length; j++) {
+      substrs.push(string.slice(i, j));
+    }
+  }
+  return substrs;
 }
 
 
-function removeChar(string, index) {
-  let strArr = string.split('');
-  strArr.splice(index, 1);
-  return strArr.join('');
-}
-
-console.log(commonChars(['a', 'b'])); //[]
-console.log(commonChars(['ab', 'bc'])); //['b']
-console.log(commonChars(['bella', 'label', 'roller'])); //['e', 'l', 'l']
-console.log(commonChars(['cool', 'lock', 'cook'])); //['c', 'o']
-console.log(commonChars(['hello', 'goodbye', 'booya', 'random'])); //['o']
-console.log(commonChars(['aabbaaa', 'ccdddddd', 'eeffee', 'ggrrrrr', 'yyyzzz'])); //[]
+console.log(substringTest('Something', 'Fun') === false);
+console.log(substringTest('Something', 'Home') === true);
+console.log(substringTest('Something', '') === false);
+console.log(substringTest('', 'Something') === false);
+console.log(substringTest('BANANA', 'banana') === true);
+console.log(substringTest('test', '111t') === false);
+console.log(substringTest('', '') === false);
+console.log(substringTest('1234567', '541265') === true);
+console.log(substringTest('supercalifragilisticexpialidocious', 'SoundOfItIsAtrociou') === true);
