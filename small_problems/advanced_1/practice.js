@@ -1,17 +1,12 @@
-const longestRepetition = s => {
-  let max = 0;
-  let char = ''; 
-  for (let i = 1, l = s.length, c = 1; i <= l; i++) {
-    if (s[i] === s[i - 1]) c++;
-    else {
-      if (c > max) {
-        max = c;
-        char = s[i - 1];
-      }
-      c = 1;
-    }
-  }
-  return [char, max];
+/*
+
+*/
+
+function solution(fullText, searchText) {
+  let regex = new RegExp(searchText, 'g');
+  return fullText.match(regex).length;
 }
 
-console.log(longestRepetition('aaabccccccddd'));
+console.log(solution('abcdeb','b') === 2);
+console.log(solution('abc','b') === 1);
+console.log(solution('abbc','bb') === 1);
