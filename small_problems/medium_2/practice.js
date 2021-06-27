@@ -1,57 +1,75 @@
 /*
-Input:
-  string with parentheses
-Output:
-  string with the parentheses removed and any
-  text in between the parentheses also removed
+Given an array of elements
+return the smallest numbers from the array
+retain the original order
 
-Example:
-''
-
-"example(unwanted thing)example"
-"a(b(c)h)"
-
+input:
+  array of elements
+output:
+  array of smallest elements as they appear in the array
 
 Rules:
-  - only alphabetic letters
-  - don't need to worry about [] or {}
-  - there can be multiple parentheses
-  - they can be nested
+  - elements can be duplicated
 
+Idea:
+  - if we sort the array to find the smallest n numbers
+    then we can just build an array based on their original
+    indices
 
 Algorithm:
-  - set var = resultString
-  - set var = seenOpenParen to 0
-  - iterate through the string
-    - if we find an open paren
-      - increment openParen by 1
-    - if we find a close paren
-      - decrement open parent by 1
-    - else
-      - check that open paren is 0
-        - add the char
-  - return the result string
+  - sort a copied array and return the smallest n numbers (helper)
+  - set variable resultArr = []
+  - iterate through the original array
+    - if a number is in our n smallest array
+      - add that number to the result arr
+      - splice that number out of the n smallest array (helper)
+  - return the result arr
+
+Algorithm (helper):
+  - input arr, n
+  - sort a copy of arr
+  - slice the elements from 0 to n
+  - return that smallest array
+
+Algorithm (splice):
+  - take array as input and number
+  - find index of number in array
+  - splice out the number at that index
+  - return the array
 */
 
-function removeParentheses(s) {
-  let resultString = '';
-  let openParenCounter = 0;
+function firstNSmallest(array, n) {
+  let smallest = getSmallestArr(array, n);
+  let resultArr = [];
 
-  s.split('').forEach(char => {
-    if (char === '(') {
-      openParenCounter += 1;
-    } else if (char === ')') {
-      openParenCounter -= 1;
-    } else if (openParenCounter === 0) {
-      resultString += char;
+  array.forEach(elem => {
+    if (smallest.includes(elem)) {
+      resultArr.push(elem);
+      smallest = removeNumber(smallest, elem);
     }
   });
-  return resultString;
+  return resultArr;
 }
 
-console.log(removeParentheses("example(unwanted thing)example") === "exampleexample");
-console.log(removeParentheses("example (unwanted thing) example") === "example  example");
-console.log(removeParentheses("a (bc d)e") === "a e");
-console.log(removeParentheses("a(b(c))") === "a");
-console.log(removeParentheses("hello example (words(more words) here) something") === "hello example  something");
-console.log(removeParentheses("(first group) (second group) (third group)") === "  ");
+function getSmallestArr(array, n) {
+  let sortArr = [...array].sort((a, b) => a - b);
+
+  return sortArr.slice(0, n);
+}
+
+function removeNumber(array, num) {
+  let index = array.indexOf(num);
+  array.splice(index, 1);
+  return array;
+}
+
+console.log(firstNSmallest([1,2,3,4,5],3)); //[1,2,3]);
+console.log(firstNSmallest([5,4,3,2,1],3)); // [3,2,1]);
+console.log(firstNSmallest([1,2,3,1,2],3)); // [1,2,1]);
+console.log(firstNSmallest([1,2,3,-4,0],3)); // [1,-4,0]);
+console.log(firstNSmallest([1,2,3,4,5],0)); // []);
+console.log(firstNSmallest([1,2,3,4,5],5)); // [1,2,3,4,5]);
+console.log(firstNSmallest([1,2,3,4,2],4)); // [1,2,3,2]);
+console.log(firstNSmallest([2,1,2,3,4,2],2)); // [2,1]);
+console.log(firstNSmallest([2,1,2,3,4,2],3)); // [2,1,2]);
+console.log(firstNSmallest([2,1,2,3,4,2],4)); // [2,1,2,2]);
