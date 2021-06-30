@@ -60,40 +60,35 @@
 
 // */
 
-// function replaceCommon(string, letter) {
-//   let frequencyObj = {}
-  
-//   string.split('').forEach(char => {
-//     if (char >= 'a' && char <= 'z') {
-//       if (frequencyObj[char]) {
-//         frequencyObj[char] += 1;
-//       } else {
-//         frequencyObj[char] = 1;
-//       }
-//     }
-//   });
-  
-//   let maxChar = getMostFrequent(string, frequencyObj);
-  
-//   let regex = new RegExp(maxChar, 'g');
-  
-//   return string.replace(regex, letter);
-  
-// }
+function replaceCommon(string, letter) {
+  let frequencyObj = {};
 
-// function getMostFrequent(string, obj) {
-//   let counter = 0;
-//   let maxChar = '';
-  
-//   string.split('').forEach(char => {
-//     if (obj[char] > counter) {
-//       maxChar = char;
-//       counter = obj[char];
-//     }
-//   });
-  
-//   return maxChar;
-// }
+  string.split('').forEach(char => {
+    if (char >= 'a' && char <= 'z') {
+      if (frequencyObj[char]) {
+        frequencyObj[char] += 1;
+      } else {
+        frequencyObj[char] = 1;
+      }
+    }
+  });
+  let maxChar = getMostFrequent(string, frequencyObj);
+  let regex = new RegExp(maxChar, 'g');
+  return string.replace(regex, letter);
+}
+
+function getMostFrequent(string, obj) {
+  let counter = 0;
+  let maxChar = '';
+
+  string.split('').forEach(char => {
+    if (obj[char] > counter) {
+      maxChar = char;
+      counter = obj[char];
+    }
+  });
+  return maxChar;
+}
 
 
 // console.log(replaceCommon('my mom loves me as never did', 't'));
@@ -167,49 +162,41 @@
 
 // */
 
-// function dashatize(num) {
-//   num = Math.abs(num);
-  
-//   if (Number.isNaN(num)) return 'NaN'
-  
-//   let strNum = String(num);
-  
-//   if (strNum.length === 1) return String(num);
+function dashatize(num) {
+  num = Math.abs(num);
+  if (Number.isNaN(num)) return 'NaN';
+  let strNum = String(num);
+  if (strNum.length === 1) return String(num);
+  let dashedString = '';
 
-//   let dashedString = '';
-  
-  
-//   strNum.split('').forEach((num, index) => {
-//     if (Number(num) % 2 !== 0) {
-//       if (dashedString[dashedString.length - 1] === '-') {
-//         dashedString += `${num}-`;
-//       } else {
-//         dashedString += `-${num}-`
-//       }
-//     } else {
-//       dashedString += num;
-//     }
-//   });
-  
-//   let fixedString = checkFirstChar(dashedString);
-  
-//   return checkForEndChar(fixedString);
-// }
+  strNum.split('').forEach((num, index) => {
+    if (Number(num) % 2 !== 0) {
+      if (dashedString[dashedString.length - 1] === '-') {
+        dashedString += `${num}-`;
+      } else {
+        dashedString += `-${num}-`
+      }
+    } else {
+      dashedString += num;
+    }
+  });
+  let fixedString = checkFirstChar(dashedString);
+  return checkForEndChar(fixedString);
+}
 
+function checkForEndChar(string) {
+  if (string[string.length - 1] === '-') {
+    return string.slice(0, string.length - 1);
+  }
+  return string;
+}
 
-// function checkForEndChar(string) {
-//   if (string[string.length - 1] === '-') {
-//     return string.slice(0, string.length - 1);
-//   }
-//   return string;
-// }
-
-// function checkFirstChar(string) {
-//   if (string[0] === '-') {
-//     return string.slice(1);
-//   }
-//   return string;
-// }
+function checkFirstChar(string) {
+  if (string[0] === '-') {
+    return string.slice(1);
+  }
+  return string;
+}
 
 // console.log(dashatize(274)); //  "2-7-4", "Should return 2-7-4"
 // console.log(dashatize(5311)); // "5-3-1-1", "Should return 5-3-1-1"
@@ -222,24 +209,23 @@
 
 
 
-// function twoSum(numbers, target) {
-//   let complimentObj = {};
-  
-//   numbers.forEach((num, index) => {
-//     complimentObj[target - num] = index;
-//   });
-  
-  
-//   for (let i = 0; i < numbers.length; i++) {
-//     let compNumber = target - numbers[i];
-//     let compIndex = numbers.indexOf(compNumber);
-//     if (compIndex === i || compIndex < 0) {
-//       continue
-//     } else {
-//       return [i, compIndex].sort((a, b) => a - b);
-//     }
-//   }
-// }
+function twoSum(numbers, target) {
+  let complimentObj = {};
+
+  numbers.forEach((num, index) => {
+    complimentObj[target - num] = index;
+  });
+
+  for (let i = 0; i < numbers.length; i++) {
+    let compNumber = target - numbers[i];
+    let compIndex = numbers.indexOf(compNumber);
+    if (compIndex === i || compIndex < 0) {
+      continue;
+    } else {
+      return [i, compIndex].sort((a, b) => a - b);
+    }
+  }
+}
 
 
 // console.log(twoSum([1, 2, 3], 4)); // [0, 2]
@@ -295,36 +281,36 @@
 
 // */
 
-// function highestRank(arr) {
-//   let frequencyObj = getFrequencies(arr);
-//   let counter = 0;
-//   let highest = [];
+function highestRank(arr) {
+  let frequencyObj = getFrequencies(arr);
+  let counter = 0;
+  let highest = [];
   
-//   arr.forEach(num => {
-//     if (frequencyObj[num] === counter) {
-//       highest.push(num);
-//     } else if (frequencyObj[num] > counter) {
-//       counter = frequencyObj[num];
-//       highest = [num];
-//     }
-//   });
+  arr.forEach(num => {
+    if (frequencyObj[num] === counter) {
+      highest.push(num);
+    } else if (frequencyObj[num] > counter) {
+      counter = frequencyObj[num];
+      highest = [num];
+    }
+  });
   
-//   return Math.max(...highest);
-// }
+  return Math.max(...highest);
+}
 
-// function getFrequencies(arr) {
-//   let frequencyObj = {};
+function getFrequencies(arr) {
+  let frequencyObj = {};
   
-//   arr.forEach(num => {
-//     if (frequencyObj[num]) {
-//       frequencyObj[num] += 1;
-//     } else {
-//       frequencyObj[num] = 1;
-//     }
-//   });
+  arr.forEach(num => {
+    if (frequencyObj[num]) {
+      frequencyObj[num] += 1;
+    } else {
+      frequencyObj[num] = 1;
+    }
+  });
   
-//   return frequencyObj;
-// }
+  return frequencyObj;
+}
 
 
 // console.log(highestRank([ 12, 10,  8, 12, 7,  6,  4, 10, 12])); // 12 
