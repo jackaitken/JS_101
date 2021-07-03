@@ -1,25 +1,11 @@
-function createBook(title, author, read = false) {
-  return {
-    title,
-    author,
-    read,
+let cat = {
+  name: 'Butter',
+  age: 13
+};
 
-    getDescription() {
-      return `${this.title} was written by ${this.author}. ` +
-      `I ${this.read ? "have" : "haven't"} read it.`;
-    },
+let cat1 = {
+  this.name: 'butter',
+  this.age: 12,
+};
 
-    readBook() {
-      this.read = true;
-    }
-  };
-}
-
-let book1 = createBook('Mythos', 'Stephen Fry');
-let book2 = createBook('Me Talk Pretty One Day', 'David Sedaris');
-let book3 = createBook("Aunt's aren't Gentleman", 'PG Wodhouse');
-
-book1.readBook();
-console.log(book3.getDescription());
-console.log(book2.getDescription());
-console.log(book1.getDescription());
+console.log(cat, cat1);
